@@ -1,15 +1,15 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "showFloatingWindow") {
-      createFloatingWindow(message.text);
+        createFloatingWindow(message.text);
     }
-  });
-  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+});
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "showLoadingWindow") {
-      createLoadingWindow(message.text);
+        createLoadingWindow(message.text);
     }
-  });
-  
-  function createLoadingWindow(text) {
+});
+
+function createLoadingWindow(text) {
     const selection = window.getSelection();
     const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
 
@@ -96,7 +96,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         // setTimeout(() => floatingDiv.remove(), 10000);
     }
 }
-  
+
 function createFloatingWindow(text) {
     const selection = window.getSelection();
     const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
@@ -168,3 +168,14 @@ function checkForSelectionChange() {
         floatingWindow.remove();
     }
 }
+
+// Listener to send text content to the background script
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    // Check if the message requests text content
+    if (message && message.requestTextContent) {
+        // Retrieve all text content from the webpage
+        var allTextContent = document.body.innerText;
+        // Send the text content back to the background script
+        sendResponse({ textContent: allTextContent });
+    }
+});
