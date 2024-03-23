@@ -1,11 +1,11 @@
+const ANTHROPIC_API_KEY = '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'; // Replace with your actual API key
+
 var contextMenuItem = {
     "id": "ULookUp",
     "title": "ULookUp \"%s\"",
     "contexts": ["selection"]
 };
 chrome.contextMenus.create(contextMenuItem);
-
-const ANTHROPIC_API_KEY = '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'; // Replace with your actual API key
 
 // Define the data to be sent in the request
 
@@ -40,6 +40,7 @@ chrome.contextMenus.onClicked.addListener(async (clickData, tab) => {
     if(clickData.menuItemId == "ULookUp" && clickData.selectionText){
         console.log(clickData.selectionText)
         // chrome.windows.create({url : "hello.html"}); 
+        chrome.tabs.sendMessage(tab.id, { action: "showLoadingWindow", text: clickData.selectionText });
         const response = await callAnthropicAPI(clickData.selectionText)
         console.log(response)
         chrome.tabs.sendMessage(tab.id, { action: "showFloatingWindow", text: response });
