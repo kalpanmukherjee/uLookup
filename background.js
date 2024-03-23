@@ -39,14 +39,8 @@ async function callAnthropicAPI(context, prompt) {
     try {
         // Await the promise to get the API key
         ANTHROPIC_API_KEY = await getApiKey();
-
-        // console.log(typeof ANTHROPIC_API_KEY); // Should log the type of the apiKey, probably 'string'
         ANTHROPIC_API_KEY = JSON.stringify(ANTHROPIC_API_KEY);
         ANTHROPIC_API_KEY = ANTHROPIC_API_KEY.slice(1, -1);;
-        // console.log(typeof ANTHROPIC_API_KEY); // Should log 'string'
-
-        // Now you can use ANTHROPIC_API_KEY in your API calls
-
     } catch (error) {
         console.error('Failed to retrieve the API key:', error);
         // Handle the error (e.g., show a message to the user)
@@ -76,14 +70,19 @@ async function callAnthropicAPI(context, prompt) {
             'content-type': 'application/json'
         },
         body: JSON.stringify(data) // Convert the JavaScript object to a JSON string
-    });
-    response = await response.json();
-    console.log(response);
-    console.log("from function ", response['content'][0]['text']);
-    return response['content'][0]['text']
-    //   .then(response => response.json()) // Parse the JSON response
-    //   .then(data => {return data['content'][0]['text']}) // Log the response data
-    //   .catch(error => console.error('Error:', error)); // Log any errors
+      });
+      response = await response.json();
+      console.log(response['type'])
+      if(response['type']=="message"){
+        return response['content'][0]['text']
+      }
+      else{
+        return "Please add/update your API key!"
+      }
+    //   if(response['type'])
+    //   console.log(response)
+    //   console.log("from function ", response['content'][0]['text'])
+     
 }
 
 
