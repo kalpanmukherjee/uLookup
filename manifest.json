@@ -1,0 +1,24 @@
+{
+    "manifest_version": 3,
+    "name": "ULookUp",
+    "version": "1.0",
+    "description": "Usefull Lookup, lookup any selected text in a page with an LLM",
+    "permissions": ["contextMenus", "activeTab", "notifications", "tabs"],
+    "background": {
+        "service_worker": "background.js"
+      },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"]
+      }
+    ],
+    "action": {
+    "default_popup": "hello.html",
+      "default_icon": {
+        "16": "hello_extensions.png",
+        "48": "hello_extensions.png",
+        "128": "hello_extensions.png"
+      }
+    }
+  }
