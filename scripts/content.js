@@ -1,19 +1,23 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "showFloatingWindow") {
-      createFloatingWindow(message.text);
+        createFloatingWindow(message.text);
     }
-  });
-  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+});
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "showLoadingWindow") {
-      createLoadingWindow(message.text);
+        createLoadingWindow(message.text);
     }
-  });
-  
-  function createLoadingWindow(text) {
+});
+
+function createLoadingWindow(text) {
     const selection = window.getSelection();
     const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
 
     if (range) {
+              const leftOverFloatingWindow = document.getElementById('customFloatingWindow');
+        if (leftOverFloatingWindow !== null) {
+            leftOverFloatingWindow.remove();
+        }
         const rect = range.getBoundingClientRect();
         const floatingDiv = document.createElement('div');
         floatingDiv.id = 'customLoadingWindow';
@@ -96,15 +100,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         // setTimeout(() => floatingDiv.remove(), 10000);
     }
 }
-  
+
 function createFloatingWindow(text) {
     const selection = window.getSelection();
     const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
 
     if (range) {
         const loadingWindow = document.getElementById('customLoadingWindow');
-        loadingWindow.remove();
+              if (loadingWindow !== null) {
+            loadingWindow.remove();
+        }
         const rect = range.getBoundingClientRect();
+              const leftOverFloatingWindow = document.getElementById('customFloatingWindow');
+        if (leftOverFloatingWindow !== null) {
+            leftOverFloatingWindow.remove();
+        }
         const floatingDiv = document.createElement('div');
         floatingDiv.id = 'customFloatingWindow';
         document.body.appendChild(floatingDiv); // Append early to calculate dimensions
@@ -163,7 +173,9 @@ document.addEventListener('mouseup', checkForSelectionChange);
 function checkForSelectionChange() {
     const selection = window.getSelection();
     const floatingWindow = document.getElementById('customFloatingWindow');
-    floatingWindow.remove();
+      if (floatingWindow !== null) {
+        floatingWindow.remove();
+    }
 
     // If there's no selection or the selection is collapsed (not selecting any text),
     // and the floating window exists, remove it.
@@ -171,3 +183,15 @@ function checkForSelectionChange() {
     //     floatingWindow.remove();
     // }
 }
+
+
+// Listener to send text content to the background script
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    // Check if the message requests text content
+    if (message && message.requestTextContent) {
+        // Retrieve all text content from the webpage
+        var allTextContent = document.body.innerText;
+        // Send the text content back to the background script
+        sendResponse({ textContent: allTextContent });
+    }
+});
