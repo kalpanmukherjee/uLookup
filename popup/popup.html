@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Key Storage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            border-radius: 50%;
+            background: linear-gradient(to bottom right, #ffffff, #e6e6e6);
+            color: linear-gradient(to bottom right, #ffffff, #e6e6e6);
+        }
+        .container {
+            width: 20%;
+            min-width: 250px; /* Adjusted for better layout */
+            /* background: white; */
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* color: black; */
+            background: linear-gradient(to bottom right, #ffffff, #e6e6e6);
+            text-align: center; /* Center everything inside the container */
+        }
+        img {
+            width: 50px; /* Size of the icon */
+            height: 50px; /* Size of the icon */
+            border-radius: 50%; /* Circular icon */
+        }
+        h2 {
+            margin: 10px 0; /* Adjust spacing around the title */
+        }
+        input, button {
+            width: calc(100% - 20px); /* Adjust width to account for padding */
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="../images/icons-48.png" alt="Useful LookUp Icon">
+        <h2>Useful LookUp</h2>
+        <input type="text" id="apiKey" placeholder="Paste API Key">
+        <button id="saveKey">Save Key</button>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>
