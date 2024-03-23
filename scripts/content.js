@@ -155,16 +155,19 @@ function createFloatingWindow(text) {
 }
 
 document.addEventListener('click', checkForSelectionChange);
-document.addEventListener('keyup', checkForSelectionChange);
+document.addEventListener('mouseup', checkForSelectionChange);
+// document.addEventListener('selectionchange', checkForSelectionChange);
+
 
 
 function checkForSelectionChange() {
     const selection = window.getSelection();
     const floatingWindow = document.getElementById('customFloatingWindow');
+    floatingWindow.remove();
 
     // If there's no selection or the selection is collapsed (not selecting any text),
     // and the floating window exists, remove it.
-    if ((!selection || selection.isCollapsed) && floatingWindow) {
-        floatingWindow.remove();
-    }
+    // if ((!selection || selection.isCollapsed) && floatingWindow) {
+    //     floatingWindow.remove();
+    // }
 }
