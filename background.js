@@ -1,5 +1,3 @@
-// const ANTHROPIC_API_KEY = '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'; // Replace with your actual API key
-
 var contextMenuItem = {
     "id": "ULookUp",
     "title": "ULookUp \"%s\"",
@@ -10,18 +8,6 @@ chrome.contextMenus.create(contextMenuItem);
 // Define the data to be sent in the request
 
 async function callAnthropicAPI(context, prompt) {
-
-    // await chrome.storage.sync.get('apiKey', function(data) {
-    //     // console.log('API Key retrieved:', data.apiKey);
-    //     ANTHROPIC_API_KEY = data.apiKey;
-    //     console.log(typeof ANTHROPIC_API_KEY)
-    //     ANTHROPIC_API_KEY = JSON.stringify(ANTHROPIC_API_KEY);
-    //     console.log(typeof ANTHROPIC_API_KEY)
-    //     // console.log(ANTHROPIC_API_KEY)
-    //     // You can now use data.apiKey in your API calls
-    // });
-    // console.log("out", typeof ANTHROPIC_API_KEY)
-
     let ANTHROPIC_API_KEY = null;
 
     const getApiKey = () => new Promise((resolve, reject) => {
@@ -49,7 +35,7 @@ async function callAnthropicAPI(context, prompt) {
     var promptWithContext = "<context>" + context + "</context>" + "<word>" + prompt + "</word>" +
         "Given the context, define the given word in a wikipedia manner, very short, under 50 words.";
 
-    console.log("Prompting the LLM with the following prompt:", promptWithContext);
+    // console.log("Prompting the LLM with the following prompt:", promptWithContext);
 
     const data = {
         model: "claude-3-haiku-20240307",
@@ -72,7 +58,7 @@ async function callAnthropicAPI(context, prompt) {
         body: JSON.stringify(data) // Convert the JavaScript object to a JSON string
       });
       response = await response.json();
-      console.log(response['type'])
+    //   console.log(response['type'])
       if(response['type']=="message"){
         return response['content'][0]['text']
       }
@@ -116,7 +102,7 @@ chrome.contextMenus.onClicked.addListener(async (clickData, tab) => {
         chrome.tabs.sendMessage(tab.id, { action: "showLoadingWindow", text: clickData.selectionText });
         requestTextContentFromContentScript(clickData.selectionText)
             .then(function (llmResponse) {
-                console.log("LLM response:", llmResponse);
+                // console.log("LLM response:", llmResponse);
                 chrome.tabs.sendMessage(tab.id, { action: "showFloatingWindow", text: llmResponse });
             })
             .catch(function (error) {
