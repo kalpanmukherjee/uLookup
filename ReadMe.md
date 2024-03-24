@@ -2,6 +2,8 @@
 ### aka Useful Lookup with Language Models
 Select text on any website, right click and select 'ULookUp' and get realtime explainations. You know, like Apple's LookUp feature, but, Useful.
 
+![](uLookup_demo.gif)
+
 ## What is this?
 This is a search-with-language models tool. Instead of having to open a new tab, navigate to google.com, search press enter, read, come back to the original page -> Just right click selected text and select uLookup, and voila! you have your generated definition right there! Click anywhere else on the page to get rid of the floating pop-up.
 What's more cool is that you get definitions and explanations depending on the context of the page you're reading! For example - if you're reading about movies, searching for 'matrix' will bring up the matrix movie franchise versus when reading about a maths concept searching for the same word with define a collection of numbers.
