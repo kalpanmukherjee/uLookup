@@ -14,6 +14,9 @@ This is a chromimum based extension written in Javascript, HTML and CSS. The def
 
 ## Cool! Can I use this too?
 Yes! As long as you have an Anthropic API key!
+
+You can download the extension from the [chrome store now](https://chromewebstore.google.com/detail/ulookup/dplgpbhfndkmmngahfmjpjhnoejljgkp)!
+
 - git clone this repo
 - open your favourite chromimum browser (chrome, brave, edge etc)
 - navigate to extension settings by typing "chrome://extensions" in the url bar
