@@ -5,7 +5,38 @@ var contextMenuItem = {
 };
 chrome.contextMenus.create(contextMenuItem);
 
+
+chrome.commands.onCommand.addListener(async (command, tab) => {
+    console.log("command triggered");
+    chrome.scripting.executeScript({
+        target: {tabId: tab.id},
+        function: () => {
+            const selectedText = getSelection().toString();
+            console.log("selected text:", selectedText);
+            chrome.runtime.sendMessage({ action: "returnSelectedText", text: selectedText });        
+        }
+      });
+  });
 // Define the data to be sent in the request
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.action === "returnSelectedText") {
+        const clickData = message.text;
+        console.log("clickData:", clickData);
+        if (clickData) {
+            console.log("Selected text:", clickData);
+            chrome.tabs.sendMessage(sender.tab.id, { action: "showLoadingWindow", text: clickData });
+            requestTextContentFromContentScript(clickData)
+                .then(function (llmResponse) {
+                    // console.log("LLM response:", llmResponse);
+                    chrome.tabs.sendMessage(sender.tab.id, { action: "showFloatingWindow", text: llmResponse });
+                })
+                .catch(function (error) {
+                    console.error("Error:", error.message);
+                });
+        }
+    }
+});
 
 async function callAnthropicAPI(context, prompt) {
     let ANTHROPIC_API_KEY = null;
@@ -82,7 +113,7 @@ function requestTextContentFromContentScript(selectedText) {
                 // Call LLM API with the retrieved text content
                 if (response && response.textContent) {
                     try {
-                        const llmResponse = await callAnthropicAPI(response.textContent, selectedText);
+                        const llmResponse = await callAnthropicAPI(response.textContent.slice(0,1000), selectedText);
                         resolve(llmResponse);
                     } catch (error) {
                         reject(error);

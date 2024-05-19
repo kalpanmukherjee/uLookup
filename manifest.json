@@ -3,13 +3,22 @@
     "name": "ULookUp",
     "version": "1.0",
     "description": "Usefull Lookup, lookup any selected text in a page with an LLM",
-    "permissions": ["contextMenus", "activeTab", "tabs", "storage"],
+    "permissions": ["contextMenus", "activeTab", "storage", "commands", "scripting"],
     "icons": {
         "16": "images/icons-16.png",
         "32": "images/icons-32.png",
         "48": "images/icons-48.png",
         "128": "images/icons-128.png"
       },
+    "commands": {
+      "look-up": {
+        "suggested_key": {
+          "default": "Alt+Z",
+          "mac": "Alt+Z"
+        },
+        "description": "ULookUp selected text"
+      }
+    },
     "background": {
         "service_worker": "background.js"
       },

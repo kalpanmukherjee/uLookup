@@ -166,6 +166,7 @@ function createFloatingWindow(text) {
 
 document.addEventListener('click', checkForSelectionChange);
 document.addEventListener('mouseup', checkForSelectionChange);
+document.addEventListener('keyup', checkForSelectionChange);
 // document.addEventListener('selectionchange', checkForSelectionChange);
 
 
