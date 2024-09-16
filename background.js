@@ -84,11 +84,13 @@ async function callAnthropicAPI(context, prompt) {
         headers: {
             'x-api-key': ANTHROPIC_API_KEY,
             'anthropic-version': '2023-06-01',
-            'content-type': 'application/json'
+            'content-type': 'application/json',
+            'anthropic-dangerous-direct-browser-access': true
         },
         body: JSON.stringify(data) // Convert the JavaScript object to a JSON string
       });
       response = await response.json();
+      console.log(response)
     //   console.log(response['type'])
       if(response['type']=="message"){
         return response['content'][0]['text']
@@ -113,9 +115,11 @@ function requestTextContentFromContentScript(selectedText) {
                 // Call LLM API with the retrieved text content
                 if (response && response.textContent) {
                     try {
+                        console.log(response.textContent.slice(0,1000))
                         const llmResponse = await callAnthropicAPI(response.textContent.slice(0,1000), selectedText);
                         resolve(llmResponse);
                     } catch (error) {
+
                         reject(error);
                     }
                 } else {
